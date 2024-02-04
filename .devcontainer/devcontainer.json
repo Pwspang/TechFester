@@ -1,0 +1,8 @@
+{
+  "image": "mcr.microsoft.com/devcontainers/universal:2",
+  "features": {
+  },
+  "scripts": {
+    "dev": "node --openssl-legacy-provider ./node_modules/.bin/next dev"
+  }
+}
