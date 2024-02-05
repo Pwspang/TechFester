@@ -19,7 +19,7 @@ Goal: To automatically generate testcases and Jest file for blackbox testing.
 **API**: [OpenAI](https://openai.com/)
 
 <p align="center">
-   <img src="https://github.com/Pwspang/TechFester/blob/main/TechFester.png" width="300"/>
+   <img src="https://github.com/Pwspang/TechFester/blob/main/TechFester.png"/>
 </p>
 
 
