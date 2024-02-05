@@ -10,7 +10,8 @@ const cors = require('cors');
 app.use(cors());
 
 const getFunctionNames = require("./generator/extractor");
-
+const generateTestCase = require("./generator/chatgptapi");
+const generateCode = require("./generator/generateCode");
 // Set up multer storage
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -25,6 +26,7 @@ const storage = multer.diskStorage({
   
   // Serve the static files in the 'uploads' folder
   app.use('/uploads', express.static('uploads'));
+  app.use(express.json());
   
   // Handle file upload endpoint
   app.post('/api/upload', upload.single('file'), (req, res) => {
@@ -39,6 +41,35 @@ const storage = multer.diskStorage({
 
     } catch (error) {
       console.error('Error uploading file:', error);
+      res.status(500).send('Internal Server Error');
+    }
+  });
+
+  app.post('/api/generateTestCase', async (req,res) => {
+    try {
+      if (req.body.function == null || req.body.function == null) throw new Error('Parameter is empty ');
+      generateTestCase(req.body.function, req.body.variable).then((value) => {
+        result = JSON.parse(value);
+        console.log(result);
+        res.status(200).json({result});
+      });
+
+    } catch (error){
+      console.error('Error Generating Test Case:', error);
+      res.status(500).send('Internal Server Error');
+    }
+  });
+
+  app.post('/api/generateJestCode', async (req,res) => {
+      try {
+      console.log(req.body);
+       generateCode(req.body.func, req.body.case).then((value) => {
+        console.log(value);
+        res.status(200).json({data : value});
+      });
+
+    } catch (error){
+      console.error('Error Generating Test Case:', error);
       res.status(500).send('Internal Server Error');
     }
   });
